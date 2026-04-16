@@ -1,0 +1,17 @@
+.DS_Store
+
+# Xcode build artifacts
+.derivedData/
+.derivedData-release/
+build/
+
+# SwiftPM cache
+.spm/
+
+# Packaging artifacts
+*.dmg
+rw.*.dmg
+
+# User-specific Xcode state
+*.xcuserstate
+**/xcuserdata/
