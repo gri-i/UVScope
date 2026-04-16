@@ -2,7 +2,7 @@
 
 UVScope is a macOS app for real-time UV and texture preview on 3D meshes (OBJ/FBX) with Metal rendering.
 
-![UVScope Preview](./docs/preview.png)
+![UVScope Preview](./docs/preview-hero.png)
 
 ## Download
 
