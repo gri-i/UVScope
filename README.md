@@ -36,6 +36,22 @@ xcodebuild -project UVScope.xcodeproj -scheme NDIPlayground -configuration Debug
 
 You can also open `UVScope.xcodeproj` in Xcode and run the `NDIPlayground` scheme.
 
+## Intel Mac build (x86_64, unsigned)
+
+Requires Xcode 16+ and the [NDI SDK for Apple](https://ndi.video/for-developers/ndi-sdk/download/) installed in `/Library`.
+
+```bash
+scripts/build-intel.sh
+```
+
+The result is `build/UVScope-mac-x86_64.dmg`, ad-hoc signed (not notarized). The same build runs in CI (`Build Intel DMG` workflow, downloadable as an artifact).
+
+Because the app is not notarized, macOS blocks the first launch. After copying it to Applications, run:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/UVScope.app
+```
+
 ## License
 
 This project is licensed under the MIT License.
