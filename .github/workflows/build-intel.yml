@@ -1,0 +1,43 @@
+name: Build Intel DMG
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "NDIPlayground/**"
+      - "FBXImportHelper/**"
+      - "UVScope.xcodeproj/**"
+      - "scripts/build-intel.sh"
+      - ".github/workflows/build-intel.yml"
+
+jobs:
+  build:
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache NDI SDK installer
+        id: ndi-cache
+        uses: actions/cache@v4
+        with:
+          path: ndi-sdk.pkg
+          key: ndi-sdk-v6-apple
+
+      - name: Download NDI SDK
+        if: steps.ndi-cache.outputs.cache-hit != 'true'
+        run: curl -fSL -o ndi-sdk.pkg https://downloads.ndi.tv/SDK/NDI_SDK_Mac/Install_NDI_SDK_v6_Apple.pkg
+
+      - name: Install NDI SDK
+        run: sudo installer -pkg ndi-sdk.pkg -target /
+
+      - name: Show toolchain
+        run: xcodebuild -version
+
+      - name: Build
+        run: scripts/build-intel.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UVScope-mac-x86_64
+          path: build/UVScope-mac-x86_64.dmg
+          if-no-files-found: error
